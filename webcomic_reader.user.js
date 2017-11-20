@@ -836,6 +836,7 @@ var defaultSettings = {
 // @include        https://hitomi.la/reader/*
 // @include        https://danbooru.donmai.us/*
 // @include        https://manga.madokami.al/reader/*
+// @include	   https://hentai.cafe/*
 // ==/UserScript==
 
 // End of includes
@@ -4653,6 +4654,18 @@ var paginas = [
 				var files = JSON.parse(HTMLjson.innerText);
 				return encodeURI(window.location.pathname) + '?index=' + encodeURIComponent(files.length - 1);
 			},
+	},
+	{
+		url:	'hentai.cafe',
+		img:	['//img[@class="open"]'],
+		back:	function(html, pos){
+				var curIndex = parseInt(document.URL.split('/').slice(-1)[0]) - 1;
+				
+				var prevIndex = Math.max(curIndex - 1, 0);
+				
+				return document.querySelector('a[onclick^="changePage(' + prevIndex + ')"]').getAttribute('href');
+				},
+		next:	['//img[@class="open"]/..'],
 	},
     // End of sites
 	/*
